@@ -67,25 +67,7 @@ func NewModel(request *plugin.CodeGeneratorRequest, perFile bool) *Model {
 }
 
 func packageName(f *descriptor.FileDescriptorProto) string {
-	// Does the file have a package clause?
-	if pkg := f.GetPackage(); pkg != "" {
-		return pkg
-	}
-
-	// use the last path element of the name, with the last dotted suffix removed.
-
-	// First, find the last element
-	name := f.GetName()
-	if i := strings.LastIndex(name, "/"); i >= 0 {
-		name = name[i+1:]
-	}
-
-	// Now drop the suffix
-	if i := strings.LastIndex(name, "."); i >= 0 {
-		name = name[0:i]
-	}
-
-	return name
+	return f.GetPackage()
 }
 
 // createDescMap builds a map from qualified names to descriptors.

@@ -442,7 +442,12 @@ func (g *openapiGenerator) generateEnumSchema(enum *protomodel.EnumDescriptor) *
 
 func (g *openapiGenerator) absoluteName(desc protomodel.CoreDesc) string {
 	typeName := protomodel.DottedName(desc)
-	return desc.PackageDesc().Name + "." + typeName
+	pkgDesc := desc.PackageDesc().Name
+	if len(pkgDesc) > 0 {
+		return desc.PackageDesc().Name + "." + typeName
+	}
+
+	return typeName
 }
 
 // converts the first section of the leading comment or the description of the proto
